@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_size">56dp</dimen>
+    <dimen name="text_header">24dp</dimen>
+    <dimen name="text_title">18sp</dimen>
+    <dimen name="text_desc">16sp</dimen>
+    <dimen name="spacing_element">16dp</dimen>
+
+    <style name="header_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_header</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="title_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textColor">@color/text1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="desc_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_desc</item>
+        <item name="android:textColor">@color/text3</item>
+    </style>
+
+    <style name="menu_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="button_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/button1</item>
+    </style>
+</resources>

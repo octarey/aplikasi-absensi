@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminActivity"
+    android:background="@color/bg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/admin_headerBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/bg"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/admin_labelHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Laporan Absensi Karyawan"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/admin_dateHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selasa, 20 Desember 2022"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/text1"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/bg2"
+            android:drawableRight="@drawable/ic_baseline_calendar_24"
+            app:layout_constraintTop_toBottomOf="@id/admin_labelHeader"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/admin_rvAbsen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="15dp"
+        android:background="@drawable/body_bg"
+        app:layout_constraintTop_toBottomOf="@id/admin_headerBox"
+        app:layout_constraintBottom_toTopOf="@id/admin_footerBox"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/admin_footerBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/admin_rvAbsen"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/admin_footerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Rekap Absensi :"
+            android:textColor="@color/text1"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/admin_footerOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On Time 0 karyawan"
+            android:textColor="@color/text1"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_ok_new"
+            android:drawablePadding="5dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/admin_footerNOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terlambat 0 karyawan"
+            android:textColor="@color/text1"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_nok"
+            android:drawablePadding="5dp"
+            android:gravity="center"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/admin_btnPrint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_baseline_print_24"
+        android:backgroundTint="@color/bg3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
