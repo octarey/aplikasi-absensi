@@ -48,6 +48,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var imageMasuk : ImageView
     private lateinit var imagePulang : ImageView
     private lateinit var btnAbsen : Button
+    private lateinit var btnHistory : TextView
 
     private lateinit var reportAll : TextView
     private lateinit var reportOn : TextView
@@ -111,6 +112,11 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         absenDateTv.text = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id")).format(Date()).toString()
 
+        btnHistory.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         btnAbsen.setOnClickListener(this)
         btnImage.setOnClickListener(this)
         btnSubmit.setOnClickListener(this)
@@ -135,6 +141,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         feedbackMasukTv = findViewById(R.id.user_masukFeedback)
         feedbackPulangTv = findViewById(R.id.user_pulangFeedback)
         btnAbsen = findViewById(R.id.user_btnAbsen)
+        btnHistory = findViewById(R.id.user_historyBtn)
 
         reportAll = findViewById(R.id.user_reportAll)
         reportOn = findViewById(R.id.user_reportOn)
@@ -225,7 +232,9 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<UserDetailResponse>, t: Throwable) {
                 println("pap gagal get user ${t.toString()}")
-                refresh()
+                Handler().postDelayed({
+                    refresh()
+                }, 2000)
             }
 
         })

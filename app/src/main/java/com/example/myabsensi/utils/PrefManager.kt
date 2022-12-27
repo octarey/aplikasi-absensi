@@ -20,10 +20,9 @@ class PrefManager(var context: Context) {
         editor?.commit()
     }
 
-    fun setLogin(type:String,token: String?, username:String?, id:Int) {
+    fun setLogin(type:String,token: String?, id:Int) {
         editor?.putString("type", type)
         editor?.putString("token", token)
-        editor?.putString("username", username)
         editor?.putInt("id", id)
         editor?.commit()
     }
@@ -38,10 +37,6 @@ class PrefManager(var context: Context) {
 
     fun getToken(): String? {
         return pref?.getString("token", "")
-    }
-
-    fun getUsername(): String? {
-        return pref?.getString("username", "")
     }
 
     fun getId(): Int {

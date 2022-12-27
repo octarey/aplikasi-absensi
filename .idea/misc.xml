@@ -8,6 +8,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/button_bg.xml" value="0.1155" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/frame_image_area.xml" value="0.1415" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/header_bg.xml" value="0.1145" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/ic_back.xml" value="0.1155" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1415" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.1415" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/ic_baseline_print_24.xml" value="0.1155" />
@@ -19,9 +20,12 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/drawable/line.xml" value="0.1425" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/activity_absen.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/activity_admin.xml" value="0.165" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/activity_history.xml" value="0.125" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/activity_main.xml" value="0.125" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/activity_user.xml" value="0.125" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/item_absensi.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/item_absensi_user.xml" value="0.125" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MyAbsensi/app/src/main/res/layout/temp.xml" value="0.25" />
       </map>
     </option>

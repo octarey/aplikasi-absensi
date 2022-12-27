@@ -74,13 +74,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (success == true && user.equals("admin")){
                     val intent = Intent(this@MainActivity,AdminActivity::class.java)
                     prefManager.setLoggin(true)
-                    prefManager.setLogin("user",token,user,id!!)
+                    prefManager.setLogin("user",token,id!!)
                     startActivity(intent)
                     finish()
                 }else if (success == true) {
                     val intent = Intent(this@MainActivity,UserActivity::class.java)
                     prefManager.setLoggin(true)
-                    prefManager.setLogin("user",token,user,id!!)
+                    prefManager.setLogin("user",token,id!!)
                     startActivity(intent)
                     finish()
                 }else{
