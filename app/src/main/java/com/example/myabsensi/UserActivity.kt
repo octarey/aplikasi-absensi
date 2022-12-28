@@ -115,7 +115,6 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         btnHistory.setOnClickListener {
             val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
-            finish()
         }
         btnAbsen.setOnClickListener(this)
         btnImage.setOnClickListener(this)
@@ -322,6 +321,7 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                     val success = response.body()?.success
                     Log.d("pap absen pulang",response.body().toString())
                     if (success == true){
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         erroret("Absensi Pulang Berhasil", R.color.success)
                         getHistoryAbsent()
                         getAbsentToday()

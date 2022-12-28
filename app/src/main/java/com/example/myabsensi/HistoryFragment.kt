@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myabsensi.pojo.UserHistoryAbsentResponse
 import com.example.myabsensi.retrofit.ApiService
 import com.example.myabsensi.utils.PrefManager
@@ -13,7 +16,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HistoryFragment : Fragment() {
+    private var fragmentView : View? = null
+    private lateinit var historyList_rv : RecyclerView
     private lateinit var prefManager: PrefManager
+    private lateinit var historyAdapter: HistoryAdapter
+
+    private lateinit var coba : TextView
 
     private var user_id = 0
     private var token_user = ""
@@ -22,12 +30,15 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        fragmentView = inflater.inflate(R.layout.fragment_history, container, false)
+        return fragmentView
 
     }
 
     private fun init(){
         prefManager = PrefManager(requireActivity().applicationContext)
+
+        historyList_rv = fragmentView!!.findViewById(R.id.fragment_historyList)
 
         token_user = prefManager.getToken().toString()
         user_id = prefManager.getId()
@@ -45,6 +56,15 @@ class HistoryFragment : Fragment() {
                 response: Response<UserHistoryAbsentResponse>
             ) {
                 println("pap riwayat absensi ${response.body()?.data}")
+                val data = response.body()?.data
+
+                historyAdapter = HistoryAdapter(requireContext(), data )
+                historyList_rv.layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+                historyList_rv.adapter = historyAdapter
             }
 
             override fun onFailure(call: Call<UserHistoryAbsentResponse>, t: Throwable) {

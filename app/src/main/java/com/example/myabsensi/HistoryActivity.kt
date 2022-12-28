@@ -2,6 +2,7 @@ package com.example.myabsensi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myabsensi.pojo.UserHistoryAbsentResponse
 import com.example.myabsensi.retrofit.ApiService
@@ -22,6 +23,7 @@ class HistoryActivity : AppCompatActivity() {
 
         val viewPager = findViewById<ViewPager2>(R.id.history_contentBox)
         val tabLayout = findViewById<TabLayout>(R.id.history_menuBox)
+        val backBtn = findViewById<ImageButton>(R.id.history_backBtn)
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
@@ -29,5 +31,15 @@ class HistoryActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = menus[position]
         }.attach()
+
+        backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

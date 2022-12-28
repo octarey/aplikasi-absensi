@@ -1,5 +1,7 @@
 package com.example.myabsensi.pojo
 
+import java.sql.Timestamp
+
 data class Absensi(
     val id : Int,
     val jam_masuk : String,
@@ -7,5 +9,6 @@ data class Absensi(
     val status_masuk : String,
     val jam_pulang : String,
     val lokasi_pulang : Int,
-    val status_pulang : String
+    val status_pulang : String,
+    val tanggal : Timestamp
 )
