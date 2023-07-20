@@ -7,8 +7,10 @@ data class Absensi(
     val jam_masuk : String,
     val lokasi_masuk : Int,
     val status_masuk : String,
+    val image_masuk : String,
     val jam_pulang : String,
     val lokasi_pulang : Int,
     val status_pulang : String,
+    val image_pulang : String,
     val tanggal : Timestamp
 )

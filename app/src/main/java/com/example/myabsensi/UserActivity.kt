@@ -1,39 +1,49 @@
 package com.example.myabsensi
 
 import android.Manifest
+import android.R.attr
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.ImageDecoder
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
-import coil.api.load
+import androidx.core.net.toFile
 import com.example.myabsensi.pojo.*
 import com.example.myabsensi.retrofit.ApiService
 import com.example.myabsensi.utils.PrefManager
-import com.google.android.gms.common.api.Api
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.delay
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+import okhttp3.RequestBody.Companion.asRequestBody
+import org.apache.poi.ss.util.ImageUtils
+
+import android.R.attr.data
+
+
+
+
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var headerName : TextView
@@ -74,6 +84,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     private val MY_CAMERA_PERMISSION_CODE = 100
 
     private var distance= 0
+    private var imageFile : File? = null
+    private var imageUri : Uri? = null
     lateinit var office : Location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -182,8 +194,6 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
             reportLate.text = listAbsents?.count { it.status_masuk == "TERLAMBAT" }.toString()
         }
 
-
-
         if (absensi != null) {
             absen_id = absensi!!.id
             jamMasukTv.text = "${absensi?.jam_masuk} WIB"
@@ -207,10 +217,12 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
                     feedbackPulangTv.text = "TERIMA KASIH UNTUK HARI INI"
                 }
             }else{
+                feedbackPulangTv.text = "Silahkan Absensi pulang setelah jam 17:00"
                 btnAbsen.text = "ABSEN PULANG"
                 btnSubmit.text = "ABSEN PULANG"
             }
         } else {
+            feedbackMasukTv.text = "Silahkan Absensi masuk sebelum jam 08:00"
             btnAbsen.text = "ABSEN MASUK"
             btnSubmit.text = "ABSEN MASUK"
         }
@@ -288,8 +300,11 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun sendData(action: String){
         val auth = "Bearer $tokenUser"
+//        val requestFile = imageFile!!.asRequestBody(contentResolver.getType(imageUri!!)?.toMediaTypeOrNull())
+//        val body = MultipartBody.Part.createFormData("image", imageFile!!.name, requestFile)
+
         if (action.equals("masuk")){
-            ApiService.endpoint.postAbsenMasuk(user_id,distance,auth).enqueue(object : Callback<UserAbsentTodayResponse>{
+            ApiService.endpoint.postAbsenMasuk(user_id, distance, auth).enqueue(object : Callback<UserAbsentTodayResponse>{
                 override fun onResponse(
                     call: Call<UserAbsentTodayResponse>,
                     response: Response<UserAbsentTodayResponse>
@@ -463,12 +478,12 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-
             if (requestCode == CAMERA_REQUEST) {
+                showInfo()
+
                 val photo = data!!.extras!!.get("data") as Bitmap?
                 photo?.let {
                     btnImage.visibility = View.GONE
-                    showInfo()
                     userImage.setImageBitmap(it)
                 }
             }

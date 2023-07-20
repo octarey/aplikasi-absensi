@@ -23,15 +23,15 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<At
 
     override fun onBindViewHolder(holder: AttendanceHolder, position: Int) {
         val name = data?.get(position)?.user_detail?.name
-        val time = data?.get(position)?.time
+        val time = data?.get(position)?.jam_masuk
         val division = data?.get(position)?.user_detail?.division
-        val status = data?.get(position)?.status
+        val status = data?.get(position)?.status_masuk
 
 
         holder.timeTv.text = time
         holder.nameTv.text = name
         holder.divisionTv.text = division
-        if (status.equals("OK")){
+        if (status.equals("ONTIME")){
             holder.statusIv.setImageResource(R.drawable.ic_ok_new)
         }else{
             holder.statusIv.setImageResource(R.drawable.ic_nok)

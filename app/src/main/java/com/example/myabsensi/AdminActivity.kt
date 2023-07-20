@@ -80,8 +80,8 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                         )
                         listAbsen.adapter = attendanceAdapter
 
-                        val ok = data?.count() { it.status == "OK" }
-                        val nok = data?.count() { it.status == "NOK" }
+                        val ok = data?.count() { it.status_masuk == "ONTIME" }
+                        val nok = data?.count() { it.status_masuk == "TERLAMBAT" }
                         countOk.text = "On Time $ok Karyawan"
                         countNok.text = "Terlambat $nok Karyawan"
                     }catch (e:Exception){
@@ -124,12 +124,12 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 var srNo = 1
                 for (a in dataAbsen) {
                     val hssfRow = hssfSheet.createRow(row)
-                    val status = if (a.status.equals("OK")) "On Time" else "Terlambat"
+                    val status = if (a.status_masuk.equals("OK")) "On Time" else "Terlambat"
                     hssfRow.createCell(0).setCellValue(srNo.toDouble())
                     hssfRow.createCell(1).setCellValue(a.user_detail.name)
                     hssfRow.createCell(2).setCellValue(a.user_detail.division)
-                    hssfRow.createCell(3).setCellValue(a.time)
-                    hssfRow.createCell(4).setCellValue(a.location.toString())
+                    hssfRow.createCell(3).setCellValue(a.jam_masuk)
+                    hssfRow.createCell(4).setCellValue(a.lokasi_masuk.toString())
                     hssfRow.createCell(5).setCellValue(status)
                     row++
                     srNo++

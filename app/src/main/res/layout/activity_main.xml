@@ -11,13 +11,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="developed 2022 by octa"
+        android:text="developed 2022"
         android:textColor="@color/text1"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/login_logoBox"/>
 
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/login_logoBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
