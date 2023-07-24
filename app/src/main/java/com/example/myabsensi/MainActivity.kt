@@ -253,7 +253,7 @@ class MainActivity : AppCompatActivity() {
                     // use your location object
                     // get latitude , longitude and other info from this
                     distance = location.distanceTo(office).toInt()
-                    if (distance > 500){
+                    if (distance > 50000){
                         infoLogin.visibility = View.VISIBLE
                         infoLogin.text = getString(R.string.info_lokasi, "luar", "datang ke tempat kerja")
                         Helper.Utils.erroret("Absen gagal $distance", R.color.error, view )

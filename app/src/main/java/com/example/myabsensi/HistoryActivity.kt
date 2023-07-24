@@ -49,14 +49,12 @@ class HistoryActivity : AppCompatActivity() {
 
         init()
         getHistoryAbsent()
-        handler.postDelayed(runnable, 0)
+        handler.postDelayed(runnable, 3000)
 
         val backBtn = findViewById<ImageButton>(R.id.logoutBtn)
 
         backBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("page", "history")
-            startActivity(intent)
+            absenPulang("pulang")
         }
 
     }
@@ -108,7 +106,7 @@ class HistoryActivity : AppCompatActivity() {
         })
     }
 
-    private fun absenPulang(){
+    private fun absenPulang(type : String){
         val jamAbsen = Helper.Utils.getTime()
         ApiService.endpoint.postAbsenPulang(absenId, jamAbsen ).enqueue(object : Callback<UserAbsentTodayResponse>{
             override fun onResponse(
@@ -116,7 +114,11 @@ class HistoryActivity : AppCompatActivity() {
                 response: Response<UserAbsentTodayResponse>
             ) {
                 if (response.isSuccessful){
-                    Helper.Utils.erroret("Anda terdeteksi keluar dari area kerja", R.color.error, historyInfo )
+                    if (type.equals("pulang")){
+                        Helper.Utils.erroret("Absesnsi pulang berhasil", R.color.success, historyInfo )
+                    }else {
+                        Helper.Utils.erroret("Anda terdeteksi keluar dari area kerja", R.color.error, historyInfo )
+                    }
                     handler.postDelayed({
                         logout()
                     },3000)
@@ -151,9 +153,9 @@ class HistoryActivity : AppCompatActivity() {
                         // use your location object
                         // get latitude , longitude and other info from this
                         distance = location.distanceTo(office).toInt()
-                        if (distance > 500){
+                        if (distance > 50000){
 //                            Toast.makeText(this@HistoryActivity, "${location.latitude} ${location.longitude} $distance", Toast.LENGTH_SHORT).show()
-                            absenPulang()
+                            absenPulang("detect")
                         }
                     }
 
