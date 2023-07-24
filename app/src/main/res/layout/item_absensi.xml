@@ -2,70 +2,147 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/bg2"
-    android:padding="5dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/absensi_time"
+        android:id="@+id/absensi_date"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="07:00"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/text1"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@drawable/frame_image_area"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/info"
+        android:text="Senin, 24 Juli 2023"
+        android:textColor="@color/text1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <TextView
-        android:id="@+id/absensi_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Agus Santoso"
-        android:textColor="@color/text1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-black"
-        android:paddingLeft="10dp"
-        app:layout_constraintTop_toTopOf="@id/absensi_time"
-        app:layout_constraintStart_toEndOf="@id/absensi_time"
-        app:layout_constraintEnd_toStartOf="@id/absensi_status"/>
-
-    <TextView
-        android:id="@+id/absensi_division"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Divisi : Digital Marketing"
-        android:paddingLeft="10dp"
-        android:textColor="@color/text1"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/absensi_name"
-        app:layout_constraintStart_toEndOf="@id/absensi_time"
-        app:layout_constraintEnd_toStartOf="@id/absensi_status"
-        app:layout_constraintBottom_toBottomOf="@id/absensi_time"/>
-
-    <ImageView
-        android:id="@+id/absensi_status"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/ic_ok_new"
-        app:layout_constraintTop_toTopOf="@id/absensi_time"
-        app:layout_constraintBottom_toBottomOf="@id/absensi_time"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <View
-        android:id="@+id/absensi_line"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintTop_toBottomOf="@id/absensi_time"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/white"
+        android:padding="5dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/absensi_date">
+
+        <TextView
+            android:id="@+id/absensi_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Agus Santoso"
+            android:textColor="@color/text1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:paddingLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/absensi_status"/>
+
+        <TextView
+            android:id="@+id/absensi_division"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Divisi : Digital Marketing"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text1"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/absensi_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/absensi_status"/>
+
+        <ImageView
+            android:id="@+id/absensi_status"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_ok_new"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="@id/absensi_name"
+            app:layout_constraintBottom_toBottomOf="@id/absensi_division"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/absensi_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintTop_toBottomOf="@id/absensi_division" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/absensi_masukBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            app:layout_constraintTop_toBottomOf="@id/absensi_line"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="ABSEN MASUK"
+                android:theme="@style/menu_style"/>
+
+            <TextView
+                android:id="@+id/absensi_masukTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="08:45"
+                android:letterSpacing="0.1"
+                android:theme="@style/desc_style"/>
+
+            <TextView
+                android:id="@+id/absensi_masukLoc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="di kantor"
+                android:theme="@style/desc_style"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/absensi_pulangBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            app:layout_constraintTop_toBottomOf="@id/absensi_masukBox"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="ABSEN PULANG"
+                android:theme="@style/menu_style"/>
+
+            <TextView
+                android:id="@+id/absensi_pulangTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="-"
+                android:letterSpacing="0.1"
+                android:theme="@style/desc_style"/>
+
+            <TextView
+                android:id="@+id/absensi_pulangLoc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="-"
+                android:theme="@style/desc_style"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,11 +37,10 @@
             android:text="Selasa, 20 Desember 2022"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/text1"
+            android:textColor="@color/text3"
             android:padding="10dp"
             android:layout_marginRight="5dp"
             android:background="@color/bg2"
-            android:drawableRight="@drawable/ic_baseline_calendar_24"
             app:layout_constraintTop_toBottomOf="@id/admin_labelHeader"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -49,6 +48,20 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/adminEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:text="@string/info_empty"
+        android:gravity="center"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/info"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/admin_headerBox"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/admin_rvAbsen"

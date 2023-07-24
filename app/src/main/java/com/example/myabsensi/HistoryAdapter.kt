@@ -24,22 +24,24 @@ class HistoryAdapter(private val mContext: Context?, private val data:List<Absen
     }
 
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
-        val status = data?.get(position)?.status_masuk
-        val date = data?.get(position)?.tanggal
+        val statusMasuk = data?.get(position)?.status_masuk
+        val statusPulang = data?.get(position)?.status_pulang
+        val date = data?.get(position)?.created_at
         val dateString = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id")).format(date).toString()
-        val jarakMasuk = data?.get(position)?.lokasi_masuk.toString()
-        val jarakPulang = data?.get(position)?.lokasi_pulang.toString()
 
         holder.dateLabel_tv.text = dateString
-        holder.jamMasuk_tv.text = data?.get(position)?.jam_masuk
-        holder.lokasiPulang_tv.text = if (jarakMasuk.equals("0")) "di kantor" else "$jarakMasuk Km dari kantor"
-        holder.jamPulang_tv.text = data?.get(position)?.jam_pulang
-        holder.lokasiPulang_tv.text = if (jarakPulang.equals("0")) "di kantor" else "$jarakPulang Km dari kantor"
+        holder.jamMasuk_tv.text = if (data?.get(position)?.jam_masuk == null) "-" else data?.get(position)?.jam_masuk
+        holder.jamPulang_tv.text = if (data?.get(position)?.jam_pulang == null) "-" else data?.get(position)?.jam_pulang
 
-        if (status.equals("ONTIME")){
-            holder.historyStatus_tv.visibility = View.GONE
-        }else{
+        holder.lokasiMasuk_tv.text = if (data?.get(position)?.jam_masuk == null) "-" else "di kantor"
+        holder.lokasiPulang_tv.text = if (data?.get(position)?.jam_pulang == null) "-" else "di kantor"
+
+
+
+        if (statusMasuk.equals("late") || statusPulang.equals("late")){
             holder.historyStatus_tv.visibility = View.VISIBLE
+        }else{
+            holder.historyStatus_tv.visibility = View.GONE
         }
     }
 

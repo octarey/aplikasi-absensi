@@ -1,8 +1,6 @@
 package com.example.myabsensi.retrofit
 
 import com.example.myabsensi.pojo.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -10,54 +8,45 @@ interface ApiEndpoint {
     @FormUrlEncoded
     @POST("login")
     fun login(
-        @Field("email") email:String,
+        @Field("username") username:String,
         @Field("password") password:String
     ):Call<LoginResponse>
 
     @FormUrlEncoded
-    @POST("user-attendance")
-    fun userAttendance(
-        @Field("user_id") user_id:Int,
+    @POST("register")
+    fun register(
         @Field("name") name:String,
-        @Field("division") division:String,
-        @Field("location") location:Int,
-        @Header("Authorization") authorization: String
-    ):Call<AttendanceResponse>
+        @Field("username") username:String,
+        @Field("password") password:String,
+        @Field("android_id") android_id:String,
+        @Field("divisi") divisi:String,
+    ):Call<LoginResponse>
 
-    @GET("list-attendance")
-    fun listAttendance():Call<AttendanceListResponse>
+    @GET("absentData")
+    fun listAttendance():Call<UserHistoryAbsentResponse>
 
-    @GET("get-user/{id}")
-    fun getUser(
-        @Path("id") id:Int,
-        @Header("Authorization") authorization: String
-    ):Call<UserDetailResponse>
-
-    @GET("get-absentToday/{id}")
+    @GET("absentToday/{id}")
     fun getAbsentToday(
-        @Path("id") id:Int,
-        @Header("Authorization") authorization: String
+        @Path("id") id:String,
     ):Call<UserAbsentTodayResponse>
 
     @FormUrlEncoded
-    @POST("absent-masuk")
+    @POST("absentMasuk")
     fun postAbsenMasuk(
         @Field("user_id") user_id:Int,
-        @Field("lokasi_masuk") name:Int,
-        @Header("Authorization") authorization: String
+        @Field("android_id") android_id:String,
+        @Field("jam_masuk") jam_masuk:String,
     ):Call<UserAbsentTodayResponse>
 
     @FormUrlEncoded
-    @POST("absent-pulang/{id}")
+    @POST("absentPulang/{id}")
     fun postAbsenPulang(
         @Path("id") id:Int,
-        @Field("lokasi_pulang") name:Int,
-        @Header("Authorization") authorization: String
+        @Field("jam_pulang") name:String,
     ):Call<UserAbsentTodayResponse>
 
-    @GET("get-absent/{user_id}")
+    @GET("absentHistory/{user_id}")
     fun getHistoryAbsent(
         @Path("user_id") user_id: Int,
-        @Header("Authorization") authorization: String
     ):Call<UserHistoryAbsentResponse>
 }

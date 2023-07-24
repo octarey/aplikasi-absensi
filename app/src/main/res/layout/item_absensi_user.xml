@@ -26,7 +26,7 @@
             android:id="@+id/history_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="terlambat"
+            android:text="tidak sesuai jadwal"
             android:textColor="@color/white"
             android:paddingHorizontal="8dp"
             android:paddingVertical="3dp"
@@ -97,7 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="17:45"
+                android:text="-"
                 android:letterSpacing="0.1"
                 android:theme="@style/desc_style"/>
 
@@ -106,7 +106,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="di kantor"
+                android:text="-"
                 android:theme="@style/desc_style"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>

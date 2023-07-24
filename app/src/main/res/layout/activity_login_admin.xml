@@ -2,15 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".LoginAdminActivity"
     android:padding="16dp"
     android:background="@color/bg2">
 
     <ImageView
-        android:id="@+id/login_titleApp"
+        android:id="@+id/adminLogin_titleApp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/app_icon"
@@ -19,26 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ProgressBar
-        android:id="@+id/login_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/login_titleApp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/login_logoBox"/>
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/login_box"
+        android:id="@+id/adminLogin_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/login_titleApp"
+        app:layout_constraintTop_toBottomOf="@id/adminLogin_titleApp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/login_logoBox"
         app:cardElevation="5dp"
         app:cardCornerRadius="10dp"
-        android:visibility="invisible"
         android:layout_margin="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,33 +40,19 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/login_title"
+                android:id="@+id/adminLogin_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/login"
+                android:text="LOGIN ADMIN"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/login_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:text="@string/info_lokasi"
-                android:gravity="center"
-                android:background="@drawable/button_bg"
-                android:backgroundTint="@color/warning"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/login_title"/>
-
             <EditText
-                android:id="@+id/login_dataUser"
+                android:id="@+id/adminLogin_dataUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
@@ -88,10 +63,10 @@
                 android:padding="8dp"
                 android:background="@drawable/input_bg"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_location"/>
+                app:layout_constraintTop_toBottomOf="@id/adminLogin_title"/>
 
             <EditText
-                android:id="@+id/login_dataPassword"
+                android:id="@+id/adminLogin_dataPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
@@ -103,18 +78,18 @@
                 android:padding="8dp"
                 android:background="@drawable/input_bg"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_dataUser"/>
+                app:layout_constraintTop_toBottomOf="@id/adminLogin_dataUser"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/login_btn"
+                android:id="@+id/adminLogin_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/login"
+                android:text="LOGIN"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:background="@drawable/button_bg"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/login_dataPassword"
+                app:layout_constraintTop_toBottomOf="@id/adminLogin_dataPassword"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
 
@@ -123,30 +98,15 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/login_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOGIN SEBAGAI ADMIN"
-        android:textSize="18sp"
-        android:textColor="@color/button1"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/login_box"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <LinearLayout
         android:visibility="visible"
         android:id="@+id/login_logoBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_admin"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
@@ -161,5 +121,7 @@
             android:src="@drawable/ic_rssa"/>
 
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

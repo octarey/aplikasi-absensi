@@ -7,7 +7,7 @@
     android:background="@color/bg2"
     tools:context=".HistoryActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/history_toolbarBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,42 +16,47 @@
         android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/history_backBtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_back"
-            android:backgroundTint="@color/white"/>
-
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Riwayat Absensi"
             android:theme="@style/title_style"
-            android:gravity="center"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/logoutBtn"/>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/history_menuBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg2"
-        app:tabIconTint="@color/teal_700"
-        app:tabIndicatorColor="@color/button2"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/teal_700"
-        app:layout_constraintTop_toBottomOf="@id/history_toolbarBox">
+        <ImageButton
+            android:id="@+id/logoutBtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_logout"
+            android:backgroundTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/history_contentBox"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_historyList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/history_menuBox"
+        app:layout_constraintTop_toBottomOf="@id/history_toolbarBox"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/historyEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:text="@string/info_empty"
+        android:gravity="center"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/warning"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/history_toolbarBox"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

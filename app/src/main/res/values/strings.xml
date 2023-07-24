@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">MyAbsensi</string>
-    <string name="login">LOGIN</string>
+    <string name="login">ABSEN %1$s</string>
     <string name="username">username</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
+    <string name="info_lokasi">Anda berada di %1$s area absensi\nSilahkan %2$s</string>
+    <string name="info_empty">Belum ada riwayat absensi</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
