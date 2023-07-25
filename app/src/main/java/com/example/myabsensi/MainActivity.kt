@@ -16,13 +16,16 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.myabsensi.pojo.LoginResponse
 import com.example.myabsensi.pojo.UserAbsentTodayResponse
 import com.example.myabsensi.retrofit.ApiService
 import com.example.myabsensi.utils.Helper
+import com.example.myabsensi.utils.ManagePermisions
 import com.example.myabsensi.utils.PrefManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -45,7 +48,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefManager: PrefManager
     private lateinit var view: View
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    lateinit var managePermisions: ManagePermisions
 
+    private var permissionRequestcode = 123
     private var type = 0  //0 untuk masuk , 1 untuk pulang
     private var userId = 0
     private var androidId = ""
@@ -62,7 +67,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         init()
-        checkAbsentToday(androidId)
+        if (cekRequestPermission()){
+            checkAbsentToday(androidId)
+        }
 
         btnLogin.setOnClickListener {
             val username = inputUSer.text.toString()
@@ -256,13 +263,70 @@ class MainActivity : AppCompatActivity() {
                     if (distance > 50000){
                         infoLogin.visibility = View.VISIBLE
                         infoLogin.text = getString(R.string.info_lokasi, "luar", "datang ke tempat kerja")
-                        Helper.Utils.erroret("Absen gagal $distance", R.color.error, view )
+                        Helper.Utils.erroret("Absen gagal", R.color.error, view )
                     }else{
                         if (type == 0) absenMasuk() else absenPulang()
                     }
+                }else{
+                    Helper.Utils.erroret("Gagal mendapatkan lokasi", R.color.error, view )
                 }
 
             }
     }
 
+    fun cekRequestPermission(): Boolean {
+        val coarseLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val fineLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+
+        val listPermission = ArrayList<String>()
+        if (coarseLocation != PackageManager.PERMISSION_GRANTED) {
+            listPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        if (fineLocation != PackageManager.PERMISSION_GRANTED) {
+            listPermission.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        if (!listPermission.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermission.toTypedArray(), permissionRequestcode)
+            return false
+        }
+
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            permissionRequestcode -> {
+                val perms = HashMap<String, Int>()
+                perms[Manifest.permission.ACCESS_COARSE_LOCATION] = PackageManager.PERMISSION_GRANTED
+                perms[Manifest.permission.ACCESS_FINE_LOCATION] = PackageManager.PERMISSION_GRANTED
+
+                if (grantResults.size > 0) {
+                    for (i in permissions.indices)
+                        perms[permissions[i]] = grantResults[i]
+
+                    if (perms[Manifest.permission.ACCESS_COARSE_LOCATION] == PackageManager.PERMISSION_GRANTED &&
+                        perms[Manifest.permission.ACCESS_FINE_LOCATION] == PackageManager.PERMISSION_GRANTED) {
+                        checkAbsentToday(androidId)
+                    } else {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
+                            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            val bld = AlertDialog.Builder(this)
+                                .setMessage("Service Permissions are required for this app")
+                                .setPositiveButton("OK") { dialog, wich ->
+                                    cekRequestPermission()
+                                }
+                                .setNegativeButton("Cancel") { dialog, wich ->
+                                    finish()
+                                };
+                            val dialog = bld.create()
+                            dialog.show()
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

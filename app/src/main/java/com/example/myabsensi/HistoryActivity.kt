@@ -11,7 +11,6 @@ import android.os.Handler
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +47,9 @@ class HistoryActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         init()
+
         getHistoryAbsent()
+
         handler.postDelayed(runnable, 3000)
 
         val backBtn = findViewById<ImageButton>(R.id.logoutBtn)
@@ -115,7 +116,7 @@ class HistoryActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful){
                     if (type.equals("pulang")){
-                        Helper.Utils.erroret("Absesnsi pulang berhasil", R.color.success, historyInfo )
+                        Helper.Utils.erroret("Absensi pulang berhasil", R.color.success, historyInfo )
                     }else {
                         Helper.Utils.erroret("Anda terdeteksi keluar dari area kerja", R.color.error, historyInfo )
                     }
