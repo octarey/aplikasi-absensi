@@ -6,10 +6,5 @@ aplikasi absensi sederhana menggunakan bahasa pemrograman kotlin.
 - location detection
 - API consumption
 
-account for testing :
-username : test
-password : test
-
-login admin :
-username : admin
-password : admin
+account for testing , username : test | password : test
+login admin , username : admin | password : admin
