@@ -11,6 +11,7 @@ import android.os.Handler
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -119,7 +120,7 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun absenPulang(type : String){
         val jamAbsen = Helper.Utils.getTime()
-        ApiService.endpoint.postAbsenPulang(absenId, jamAbsen ).enqueue(object : Callback<UserAbsentTodayResponse>{
+        ApiService.endpoint.postAbsenPulang(this.absenId, jamAbsen ).enqueue(object : Callback<UserAbsentTodayResponse>{
             override fun onResponse(
                 call: Call<UserAbsentTodayResponse>,
                 response: Response<UserAbsentTodayResponse>

@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         if (login == true && role.equals("user") && page == ""){
             val intent = Intent(this@MainActivity,HistoryActivity::class.java)
             intent.putExtra("userId", prefManager.getId())
-            intent.putExtra("absenId", absenId)
+            intent.putExtra("absenId", this.absenId)
             startActivity(intent)
             finish()
         }else{
@@ -189,6 +189,7 @@ class MainActivity : AppCompatActivity() {
                 response: Response<UserAbsentTodayResponse>
             ) {
                 if (response.isSuccessful){
+                    absenId = response.body()!!.data.id
                     Helper.Utils.erroret("Absen berhasil", R.color.success, view )
                     Handler().postDelayed({
                         val intent = Intent(this@MainActivity, HistoryActivity::class.java)
@@ -223,7 +224,7 @@ class MainActivity : AppCompatActivity() {
                     Handler().postDelayed({
                         val intent = Intent(this@MainActivity, HistoryActivity::class.java)
                         intent.putExtra("userId", userId)
-                        intent.putExtra("absenId", absenId)
+                        intent.putExtra("absenId", this@MainActivity.absenId)
                         prefManager.setLoggin(true)
                         prefManager.setLogin("user",userId, absenId )
                         startActivity(intent)
