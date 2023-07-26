@@ -31,6 +31,9 @@ class HistoryActivity : AppCompatActivity() {
     private lateinit var historyList_rv : RecyclerView
     private lateinit var historyAdapter: HistoryAdapter
     private lateinit var historyInfo: TextView
+    private lateinit var reportAll : TextView
+    private lateinit var reportOn : TextView
+    private lateinit var reportLate : TextView
     private lateinit var prefManager: PrefManager
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -64,6 +67,9 @@ class HistoryActivity : AppCompatActivity() {
         prefManager = PrefManager(this)
         historyList_rv = findViewById(R.id.fragment_historyList)
         historyInfo = findViewById(R.id.historyEmpty)
+        reportAll = findViewById(R.id.user_reportAll)
+        reportOn = findViewById(R.id.user_reportOn)
+        reportLate = findViewById(R.id.user_reportLate)
         user_id = intent.getIntExtra("userId", 0)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -94,6 +100,10 @@ class HistoryActivity : AppCompatActivity() {
                         false
                     )
                     historyList_rv.adapter = historyAdapter
+
+                    reportAll.text = data.size.toString()
+                    reportOn.text = data.count { it.status_masuk == "ontime" }.toString()
+                    reportLate.text = data.count { it.status_masuk == "late" || it.status_pulang == "late" }.toString()
                 }else{
                     historyInfo.visibility = View.VISIBLE
                 }

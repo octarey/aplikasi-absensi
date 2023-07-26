@@ -25,7 +25,6 @@ import com.example.myabsensi.pojo.LoginResponse
 import com.example.myabsensi.pojo.UserAbsentTodayResponse
 import com.example.myabsensi.retrofit.ApiService
 import com.example.myabsensi.utils.Helper
-import com.example.myabsensi.utils.ManagePermisions
 import com.example.myabsensi.utils.PrefManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefManager: PrefManager
     private lateinit var view: View
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    lateinit var managePermisions: ManagePermisions
 
     private var permissionRequestcode = 123
     private var type = 0  //0 untuk masuk , 1 untuk pulang
