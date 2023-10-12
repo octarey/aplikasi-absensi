@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserActivity"
+    android:background="@color/bg2">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/user_headerBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@color/bg"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/user_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tambah User"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="8dp"
+            android:elevation="8dp"
+            android:background="@drawable/button_bg"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/text1"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintTop_toTopOf="@id/user_labelHeader"
+            app:layout_constraintBottom_toBottomOf="@id/user_dateHeader"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/user_labelHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data User"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/text1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/user_dateHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="data diperbaharui : 20 Desember 2022"
+            android:textSize="12sp"
+            android:textColor="@color/text3"
+            android:layout_marginRight="5dp"
+            app:layout_constraintTop_toBottomOf="@id/user_labelHeader"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listUser"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/user_headerBox"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

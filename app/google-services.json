@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183145347055",
+    "project_id": "test-notif-app-4060e",
+    "storage_bucket": "test-notif-app-4060e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183145347055:android:54febb1b34544c627a281a",
+        "android_client_info": {
+          "package_name": "com.example.myabsensi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183145347055-4ef8vi7qeciv1ldui7fhoiu496di6u69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-nMhf8knAHJbcWf2jdPN5eobfuTPh04E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183145347055-4ef8vi7qeciv1ldui7fhoiu496di6u69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -28,6 +28,9 @@ import com.example.myabsensi.utils.Helper
 import com.example.myabsensi.utils.PrefManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,6 +57,8 @@ class MainActivity : AppCompatActivity() {
     private var androidId = ""
     private var absenId = 0
     private var distance= 0
+    private var username = ""
+    private var password = ""
     private lateinit var office : Location
     private var page = ""
 
@@ -70,8 +75,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            val username = inputUSer.text.toString()
-            val password = inputPassword.text.toString()
+            username = inputUSer.text.toString()
+            password = inputPassword.text.toString()
             if (username.isEmpty() || password.isEmpty()){
                 Toast.makeText(this, "username / password harus diisi", Toast.LENGTH_SHORT).show()
             }else {
@@ -83,6 +88,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, LoginAdminActivity::class.java)
             startActivity(intent)
         }
+
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this,
+            OnSuccessListener<InstanceIdResult> { instanceIdResult ->
+                val token = instanceIdResult.token
+                Log.i("FCM Token", token)
+                //inputUSer.setText(token)
+            })
     }
 
     private fun init(){
@@ -163,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         ApiService.endpoint.login(username,password).enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 val success = response.body()?.success
-                val user = response.body()?.data?.name
                 Log.d("pap login ",  success.toString())
                 if (success == true) {
                     userId = response.body()?.data?.id!!

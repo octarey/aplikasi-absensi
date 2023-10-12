@@ -1,10 +1,18 @@
 package com.example.myabsensi.utils
 
+import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.myabsensi.R
+import com.example.myabsensi.pojo.User
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -29,5 +37,6 @@ class Helper {
             snackbar.setTextColor(Color.BLACK)
             snackbar.show()
         }
+
     }
 }

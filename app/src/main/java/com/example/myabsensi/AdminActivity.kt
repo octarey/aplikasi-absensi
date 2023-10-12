@@ -1,5 +1,6 @@
 package com.example.myabsensi
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -53,12 +54,15 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
         countNok = findViewById(R.id.admin_footerNOK)
         listAbsen = findViewById(R.id.admin_rvAbsen)
         btnPrint = findViewById(R.id.admin_btnPrint)
+        val btnUser = findViewById<TextView>(R.id.admin_menu)
 
         dateLabel.text = "data diperbaharui : $date"
 
         getAttendance()
 
         btnPrint.setOnClickListener(this)
+        btnUser.setOnClickListener(this)
+
     }
 
 
@@ -106,6 +110,11 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(p0: View) {
         when(p0.id) {
+            R.id.admin_menu -> {
+                val intent = Intent(this@AdminActivity, UserActivity::class.java)
+                startActivity(intent)
+            }
+
             R.id.admin_btnPrint -> {
                 Toast.makeText(this, "Export data absensi, harap tunggu...", Toast.LENGTH_SHORT).show()
                 val hssfWorkbook = HSSFWorkbook()

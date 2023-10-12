@@ -27,6 +27,10 @@ class PrefManager(var context: Context) {
         editor?.commit()
     }
 
+    fun setToken(token: String){
+        editor?.putString("token", token)
+    }
+
     fun isLogin(): Boolean? {
         return pref?.getBoolean(IS_LOGIN, false)
     }

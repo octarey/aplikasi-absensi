@@ -49,4 +49,24 @@ interface ApiEndpoint {
     fun getHistoryAbsent(
         @Path("user_id") user_id: Int,
     ):Call<UserHistoryAbsentResponse>
+
+
+    @GET("userData")
+    fun userData(): Call<UserResponse>
+
+    @POST("userDelete/{id}")
+    fun userDelete(
+        @Path("id") id:Int,
+    ): Call<BaseResponse>
+
+    @FormUrlEncoded
+    @POST("userEdit/{id}")
+    fun userEdit(
+        @Path("id") id:Int,
+        @Field("name") name:String,
+        @Field("username") username:String,
+        @Field("password") password:String,
+        @Field("android_id") android_id:String,
+        @Field("divisi") divisi:String,
+    ):Call<LoginResponse>
 }
