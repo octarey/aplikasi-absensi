@@ -42,12 +42,12 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<Ab
         holder.absensiDate.text = date
         holder.absensiName.text = name
         holder.absnesiDivision.text = "Divisi : $division"
-        holder.absensiMasukTime.text = data?.get(position)?.jam_masuk
-        holder.absensiMasukLoc.text = if (data?.get(position)?.jam_masuk == null) "-" else "di kantor"
-        holder.absensiPulangTime.text = data?.get(position)?.jam_pulang
-        holder.absensiPulangLoc.text = if (data?.get(position)?.jam_pulang == null) "-" else "di kantor"
+        holder.absensiMasukTime.text = data[position].jam_masuk
+        holder.absensiMasukLoc.text = if (data[position].jam_masuk == null) "-" else "di kantor"
+        holder.absensiPulangTime.text = data[position].jam_pulang
+        holder.absensiPulangLoc.text = if (data.get(position).jam_pulang == null) "-" else "di kantor"
 
-        if (status.equals("late") || statusPulang.equals("late")){
+        if (status.equals("late") || statusPulang.equals("late") || statusPulang.isNullOrEmpty()){
             holder.absensiStatus.setImageResource(R.drawable.ic_nok)
         }else{
             holder.absensiStatus.setImageResource(R.drawable.ic_ok_new)

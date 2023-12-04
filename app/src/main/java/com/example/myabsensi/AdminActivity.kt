@@ -1,12 +1,14 @@
 package com.example.myabsensi
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,6 +57,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
         listAbsen = findViewById(R.id.admin_rvAbsen)
         btnPrint = findViewById(R.id.admin_btnPrint)
         val btnUser = findViewById<TextView>(R.id.admin_menu)
+        val btnLogout = findViewById<TextView>(R.id.admin_logout)
 
         dateLabel.text = "data diperbaharui : $date"
 
@@ -62,6 +65,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
 
         btnPrint.setOnClickListener(this)
         btnUser.setOnClickListener(this)
+        btnLogout.setOnClickListener(this)
 
     }
 
@@ -108,11 +112,18 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View) {
         when(p0.id) {
             R.id.admin_menu -> {
                 val intent = Intent(this@AdminActivity, UserActivity::class.java)
                 startActivity(intent)
+            }
+
+            R.id.admin_logout -> {
+                val intent = Intent(this@AdminActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
 
             R.id.admin_btnPrint -> {
@@ -130,9 +141,10 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 hssfRowTitle.createCell(1).setCellValue("tanggal")
                 hssfRowTitle.createCell(2).setCellValue("nama")
                 hssfRowTitle.createCell(3).setCellValue("divisi")
-                hssfRowTitle.createCell(4).setCellValue("jam masuk")
+                hssfRowTitle.createCell(4).setCellValue("jam datang")
                 hssfRowTitle.createCell(5).setCellValue("jam pulang")
-                hssfRowTitle.createCell(6).setCellValue("status")
+                hssfRowTitle.createCell(6).setCellValue("status datang")
+                hssfRowTitle.createCell(7).setCellValue("status pulang")
                 //--------------
                 //--------------
                 var row = 2
@@ -140,6 +152,13 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 for (a in dataAbsen) {
                     val hssfRow = hssfSheet.createRow(row)
                     val status = if (a.status_masuk.equals("OK")) "On Time" else "Terlambat"
+                    var statusPulang = ""
+                    if (a.status_pulang.isNullOrEmpty()){
+                        statusPulang = "Tidak Absen"
+                    }else {
+                        statusPulang = if (a.status_pulang.equals("OK")) "On Time" else "Pulang Awal"
+                    }
+
                     val date = Helper.Utils.indonesianDate(a.created_at)
                     hssfRow.createCell(0).setCellValue(srNo.toDouble())
                     hssfRow.createCell(1).setCellValue(date)
@@ -148,6 +167,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                     hssfRow.createCell(4).setCellValue(a.jam_masuk)
                     hssfRow.createCell(5).setCellValue(a.jam_pulang)
                     hssfRow.createCell(6).setCellValue(status)
+                    hssfRow.createCell(7).setCellValue(statusPulang)
                     row++
                     srNo++
                 }
@@ -166,6 +186,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                     fileOutputStream.close()
                     Toast.makeText(this, "Export successfully", Toast.LENGTH_SHORT).show()
                 } catch (e: IOException) {
+                    Toast.makeText(this, "Export failed", Toast.LENGTH_SHORT).show()
                     Log.d("pap gagal print", e.toString())
                     e.printStackTrace()
                 }
