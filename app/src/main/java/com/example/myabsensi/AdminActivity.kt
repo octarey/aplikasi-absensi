@@ -151,12 +151,12 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 var srNo = 1
                 for (a in dataAbsen) {
                     val hssfRow = hssfSheet.createRow(row)
-                    val status = if (a.status_masuk.equals("OK")) "On Time" else "Terlambat"
+                    val status = if (a.status_masuk.equals("OK")) "Ok" else "Terlambat"
                     var statusPulang = ""
                     if (a.status_pulang.isNullOrEmpty()){
                         statusPulang = "Tidak Absen"
                     }else {
-                        statusPulang = if (a.status_pulang.equals("OK")) "On Time" else "Pulang Awal"
+                        statusPulang = if (a.status_pulang.equals("OK")) "Ok" else "Pulang Awal"
                     }
 
                     val date = Helper.Utils.indonesianDate(a.created_at)

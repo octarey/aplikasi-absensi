@@ -39,13 +39,25 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<Ab
         } else {
             holder.absensiDate.visibility = View.VISIBLE
         }
+
+        var keterangan = ""
+        if (data[position].jam_pulang == null) {
+            keterangan = "Tidak Absen"
+
+        }else{
+            if (statusPulang == "late"){
+                keterangan = "Pulang Awal"
+            }else{
+                keterangan = "Ok"
+            }
+        }
         holder.absensiDate.text = date
         holder.absensiName.text = name
         holder.absnesiDivision.text = "Divisi : $division"
         holder.absensiMasukTime.text = data[position].jam_masuk
-        holder.absensiMasukLoc.text = if (data[position].jam_masuk == null) "-" else "di kantor"
+        holder.absensiMasukLoc.text = if (data[position].status_masuk.equals("late")) "Terlambat" else "Ok"
         holder.absensiPulangTime.text = data[position].jam_pulang
-        holder.absensiPulangLoc.text = if (data.get(position).jam_pulang == null) "-" else "di kantor"
+        holder.absensiPulangLoc.text = keterangan
 
         if (status.equals("late") || statusPulang.equals("late") || statusPulang.isNullOrEmpty()){
             holder.absensiStatus.setImageResource(R.drawable.ic_nok)
