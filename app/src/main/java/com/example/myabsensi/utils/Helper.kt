@@ -37,6 +37,5 @@ class Helper {
             snackbar.setTextColor(Color.BLACK)
             snackbar.show()
         }
-
     }
 }

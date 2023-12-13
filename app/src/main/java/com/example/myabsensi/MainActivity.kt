@@ -26,6 +26,7 @@ import com.example.myabsensi.pojo.UserAbsentTodayResponse
 import com.example.myabsensi.retrofit.ApiService
 import com.example.myabsensi.utils.Helper
 import com.example.myabsensi.utils.PrefManager
+import com.example.myabsensi.utils.SessionManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnSuccessListener
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var layoutLogin : CardView
     private lateinit var loadingLogin : ProgressBar
     private lateinit var prefManager: PrefManager
+    private lateinit var sessionManager: SessionManager
     private lateinit var view: View
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private var androidId = ""
     private var absenId = 0
     private var distance= 0
+    private var radius = 50000
     private var username = ""
     private var password = ""
     private lateinit var office : Location
@@ -108,6 +111,7 @@ class MainActivity : AppCompatActivity() {
         loadingLogin = findViewById(R.id.login_loading)
         view = findViewById(R.id.login_layout)
         prefManager = PrefManager(this)
+        sessionManager = SessionManager(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
@@ -115,10 +119,7 @@ class MainActivity : AppCompatActivity() {
         if (intent.hasExtra("page")){
             page = intent.getStringExtra("page").toString()
         }
-
-        office = Location("office")
-        office.latitude = -7.949828
-        office.longitude = 112.6206271
+//
 
 //        office.latitude = -8.194319
 //        office.longitude = 112.7167632
@@ -142,6 +143,7 @@ class MainActivity : AppCompatActivity() {
                 }else {
                     absenId = data.id
                     checkLogin()
+                    setLocation()
                 }
             }
 
@@ -168,6 +170,23 @@ class MainActivity : AppCompatActivity() {
             titleLogin.text = getString(R.string.login, "PULANG")
             btnLogin.text = getString(R.string.login, "PULANG")
             type = 1
+        }
+    }
+
+    private fun setLocation(){
+        office = Location("office")
+        val lat = sessionManager.getValueString("latitude")
+        val long = sessionManager.getValueString("longitude")
+
+        //Toast.makeText(this, "$lat $long", Toast.LENGTH_SHORT).show()
+
+        if (!lat.isNullOrEmpty() && !long.isNullOrEmpty()){
+            office.latitude = lat.toDouble()
+            office.longitude = long.toDouble()
+            radius = sessionManager.getValueString("radius")?.toInt() ?: 0
+        }else {
+            office.latitude = -8.949828
+            office.longitude = 100.6206271
         }
     }
 
@@ -266,11 +285,12 @@ class MainActivity : AppCompatActivity() {
         }
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location->
+                //Toast.makeText(this, "${location.latitude} ${location.longitude}", Toast.LENGTH_SHORT).show()
                 if (location != null) {
                     // use your location object
                     // get latitude , longitude and other info from this
                     distance = location.distanceTo(office).toInt()
-                    if (distance > 50000){
+                    if (distance > radius){
                         infoLogin.visibility = View.VISIBLE
                         infoLogin.text = getString(R.string.info_lokasi, "luar", "datang ke tempat kerja")
                         Helper.Utils.erroret("Absen gagal", R.color.error, view )

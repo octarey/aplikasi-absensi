@@ -27,8 +27,11 @@ class PrefManager(var context: Context) {
         editor?.commit()
     }
 
-    fun setToken(token: String){
-        editor?.putString("token", token)
+    fun setLocation(lat: String, long: String, radius: Int){
+        editor?.putString("latitude", lat)
+        editor?.putString("longitude", long)
+        editor?.putInt("radius", radius)
+        editor?.commit()
     }
 
     fun isLogin(): Boolean? {
@@ -39,8 +42,16 @@ class PrefManager(var context: Context) {
         return pref?.getString("type", "")
     }
 
-    fun getToken(): String? {
-        return pref?.getString("token", "")
+    fun getLatitude(): String? {
+        return pref?.getString("latitude", "")
+    }
+
+    fun getLongitude(): String? {
+        return pref?.getString("longitude", "")
+    }
+
+    fun getRadius(): Int {
+        return pref?.getInt("radius", 0)!!
     }
 
     fun getId(): Int {

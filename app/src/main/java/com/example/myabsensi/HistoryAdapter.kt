@@ -29,12 +29,23 @@ class HistoryAdapter(private val mContext: Context?, private val data:List<Absen
         val date = data?.get(position)?.created_at
         val dateString = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id")).format(date).toString()
 
+        var keterangan = ""
+        if (data!![position].jam_pulang == null) {
+            keterangan = "Tidak Absen"
+
+        }else{
+            if (statusPulang == "late"){
+                keterangan = "Pulang Awal"
+            }else{
+                keterangan = "Ok"
+            }
+        }
         holder.dateLabel_tv.text = dateString
         holder.jamMasuk_tv.text = if (data?.get(position)?.jam_masuk == null) "-" else data?.get(position)?.jam_masuk
         holder.jamPulang_tv.text = if (data?.get(position)?.jam_pulang == null) "-" else data?.get(position)?.jam_pulang
 
-        holder.lokasiMasuk_tv.text = if (data?.get(position)?.jam_masuk == null) "-" else "di kantor"
-        holder.lokasiPulang_tv.text = if (data?.get(position)?.jam_pulang == null) "-" else "di kantor"
+        holder.lokasiMasuk_tv.text = if (data?.get(position)?.status_masuk == "late") "Terlambat" else "Ok"
+        holder.lokasiPulang_tv.text = keterangan
 
 
 

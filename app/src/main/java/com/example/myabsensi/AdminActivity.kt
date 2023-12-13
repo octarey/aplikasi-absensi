@@ -1,11 +1,17 @@
 package com.example.myabsensi
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -18,6 +24,8 @@ import com.example.myabsensi.pojo.Absensi
 import com.example.myabsensi.pojo.UserHistoryAbsentResponse
 import com.example.myabsensi.retrofit.ApiService
 import com.example.myabsensi.utils.Helper
+import com.example.myabsensi.utils.PrefManager
+import com.example.myabsensi.utils.SessionManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import retrofit2.Call
@@ -39,8 +47,10 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var keyFilter : EditText
     private lateinit var attendanceAdapter: AttendanceAdapter
     private lateinit var btnPrint : FloatingActionButton
+    private lateinit var btnLocation : FloatingActionButton
     private lateinit var btnUser : TextView
     private lateinit var dataAbsen : List<Absensi>
+    private lateinit var sessionManager: SessionManager
 
     private var date : String = ""
 
@@ -54,6 +64,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
 //        }
 
         date = Helper.Utils.indonesianDate(Date())
+        sessionManager = SessionManager(this)
 
         val type = intent.getStringExtra("type")
 
@@ -65,6 +76,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
         keyFilter = findViewById(R.id.filterKeyword)
         listAbsen = findViewById(R.id.admin_rvAbsen)
         btnPrint = findViewById(R.id.admin_btnPrint)
+        btnLocation = findViewById(R.id.admin_btnLocation)
         btnUser = findViewById(R.id.admin_menu)
         val btnLogout = findViewById<TextView>(R.id.admin_logout)
 
@@ -77,6 +89,7 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
 
         btnFilter.setOnClickListener(this)
         btnPrint.setOnClickListener(this)
+        btnLocation.setOnClickListener(this)
         btnUser.setOnClickListener(this)
         btnLogout.setOnClickListener(this)
 
@@ -164,6 +177,42 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
 
+            R.id.admin_btnLocation -> {
+                val dialog = Dialog(this)
+                dialog.window?.requestFeature(Window.FEATURE_NO_TITLE) // if you have blue line on top of your dialog, you need use this code
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.setContentView(R.layout.layout_edit_location)
+                val inputLatitude = dialog.findViewById(R.id.inputLatitude) as EditText
+                val inputLongitude = dialog.findViewById(R.id.inputLongitude) as EditText
+                val inputRadius = dialog.findViewById(R.id.inputRadius) as EditText
+                val dialogPositiveButton = dialog.findViewById(R.id.btnSave) as Button
+                val dialogNegativeButton = dialog.findViewById(R.id.btnCancel) as Button
+                dialogPositiveButton.setOnClickListener {
+                    val lat = inputLatitude.text.toString()
+                    val long = inputLongitude.text.toString()
+                    val radius = inputRadius.text.toString()
+                    sessionManager.save("latitude", lat)
+                    sessionManager.save("longitude", long)
+                    sessionManager.save("radius", radius)
+                    Helper.Utils.erroret("Lokasi absensi berhasil diubah", R.color.success, btnLocation)
+                    dialog.dismiss()
+                }
+                dialogNegativeButton.setOnClickListener {
+                    inputLatitude.setText("")
+                    inputLongitude.setText("")
+                    inputRadius.setText("")
+                    dialog.dismiss()
+                }
+
+                val lp = WindowManager.LayoutParams()
+                lp.copyFrom(dialog.window!!.attributes)
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+                dialog.show()
+                val window = dialog.window
+                window!!.attributes = lp
+            }
+
             R.id.admin_btnPrint -> {
                 Toast.makeText(this, "Export data absensi, harap tunggu...", Toast.LENGTH_SHORT).show()
                 val hssfWorkbook = HSSFWorkbook()
@@ -189,12 +238,12 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 var srNo = 1
                 for (a in dataAbsen) {
                     val hssfRow = hssfSheet.createRow(row)
-                    val status = if (a.status_masuk.equals("OK")) "Ok" else "Terlambat"
+                    val status = if (a.status_masuk.equals("late")) "Terlambat" else "Ok"
                     var statusPulang = ""
                     if (a.status_pulang.isNullOrEmpty()){
                         statusPulang = "Tidak Absen"
                     }else {
-                        statusPulang = if (a.status_pulang.equals("OK")) "Ok" else "Pulang Awal"
+                        statusPulang = if (a.status_pulang.equals("late")) "Pulang Awal" else "Ok"
                     }
 
                     val date = Helper.Utils.indonesianDate(a.created_at)

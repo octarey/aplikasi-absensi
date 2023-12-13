@@ -47,7 +47,7 @@
             android:padding="8dp"
             android:elevation="8dp"
             android:background="@drawable/button_bg"
-            android:backgroundTint="@color/warning"
+            android:backgroundTint="@color/error"
             android:textColor="@color/text1"
             android:layout_marginEnd="4dp"
             app:layout_constraintTop_toTopOf="@id/admin_labelHeader"
@@ -206,4 +206,14 @@
         android:backgroundTint="@color/bg3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/admin_btnLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_location"
+        android:backgroundTint="@color/info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/admin_footerBox"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
