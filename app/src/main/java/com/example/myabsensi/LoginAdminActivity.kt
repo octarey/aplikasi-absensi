@@ -23,12 +23,16 @@ class LoginAdminActivity : AppCompatActivity() {
             
             if (username.equals("admin") && password.equals("admin")){
                 val intent = Intent(this@LoginAdminActivity,  AdminActivity::class.java)
-//            prefManager.setLoggin(true)
-//            prefManager.setLogin("admin",userId )
-//            intent.putExtra("userId", userId)
+                intent.putExtra("type" , "admin")
                 startActivity(intent)
                 finish()
-            }else{
+            } else if (username.equals("pengawas") && password.equals("pengawas")){
+                val intent = Intent(this@LoginAdminActivity,  AdminActivity::class.java)
+                intent.putExtra("type" , "pengawas")
+                startActivity(intent)
+                finish()
+
+            } else{
                 Toast.makeText(this, "Login gagal, username / password tidak sesuai", Toast.LENGTH_SHORT).show()
             }
            

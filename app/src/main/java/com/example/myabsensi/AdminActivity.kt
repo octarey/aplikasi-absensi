@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -28,14 +30,17 @@ import java.util.*
 
 
 class AdminActivity : AppCompatActivity(), View.OnClickListener {
-    lateinit var dateLabel : TextView
-    lateinit var emptyLabel : TextView
-    lateinit var countOk : TextView
-    lateinit var countNok : TextView
-    lateinit var listAbsen : RecyclerView
-    lateinit var attendanceAdapter: AttendanceAdapter
-    lateinit var btnPrint : FloatingActionButton
-    lateinit var dataAbsen : List<Absensi>
+    private lateinit var dateLabel : TextView
+    private lateinit var emptyLabel : TextView
+    private lateinit var countOk : TextView
+    private lateinit var countNok : TextView
+    private lateinit var listAbsen : RecyclerView
+    private lateinit var btnFilter : ImageButton
+    private lateinit var keyFilter : EditText
+    private lateinit var attendanceAdapter: AttendanceAdapter
+    private lateinit var btnPrint : FloatingActionButton
+    private lateinit var btnUser : TextView
+    private lateinit var dataAbsen : List<Absensi>
 
     private var date : String = ""
 
@@ -50,25 +55,42 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
 
         date = Helper.Utils.indonesianDate(Date())
 
+        val type = intent.getStringExtra("type")
+
         dateLabel = findViewById(R.id.admin_dateHeader)
         emptyLabel = findViewById(R.id.adminEmpty)
         countOk = findViewById(R.id.admin_footerOK)
         countNok = findViewById(R.id.admin_footerNOK)
+        btnFilter = findViewById(R.id.filterBtn)
+        keyFilter = findViewById(R.id.filterKeyword)
         listAbsen = findViewById(R.id.admin_rvAbsen)
         btnPrint = findViewById(R.id.admin_btnPrint)
-        val btnUser = findViewById<TextView>(R.id.admin_menu)
+        btnUser = findViewById(R.id.admin_menu)
         val btnLogout = findViewById<TextView>(R.id.admin_logout)
 
         dateLabel.text = "data diperbaharui : $date"
 
+        if (type != null) {
+            setMenu(type)
+        }
         getAttendance()
 
+        btnFilter.setOnClickListener(this)
         btnPrint.setOnClickListener(this)
         btnUser.setOnClickListener(this)
         btnLogout.setOnClickListener(this)
 
     }
 
+    private fun setMenu(type : String){
+        if (type == "admin"){
+            btnUser.visibility = View.VISIBLE
+            btnPrint.visibility = View.VISIBLE
+        }else{
+            btnUser.visibility = View.GONE
+            btnPrint.visibility = View.GONE
+        }
+    }
 
     private fun getAttendance(){
         ApiService.endpoint.listAttendance().enqueue(object : Callback<UserHistoryAbsentResponse>{
@@ -79,13 +101,16 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 Log.d("pap list", response.body().toString())
                 if (response.body()?.success == true){
                     try {
-                        val data = response.body()?.data
-                        dataAbsen = response.body()?.data!!
+                        val data = response.body()?.data?.sortedByDescending { it.id }
+                        if (data != null) {
+                            dataAbsen = data
+                        }
+
                         if (dataAbsen.isEmpty()){
                             emptyLabel.visibility = View.VISIBLE
                         }
 
-                        attendanceAdapter = AttendanceAdapter(this@AdminActivity, data)
+                        attendanceAdapter = AttendanceAdapter(this@AdminActivity, dataAbsen)
                         listAbsen.layoutManager = LinearLayoutManager(
                             this@AdminActivity,
                             LinearLayoutManager.VERTICAL,
@@ -124,6 +149,19 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this@AdminActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
+            }
+
+            R.id.filterBtn -> {
+                val key = keyFilter.text.toString()
+                val result = dataAbsen.filter { it.user.name.lowercase().contains(key) }
+                attendanceAdapter.update(result)
+
+                if (result.isEmpty()){
+                    emptyLabel.visibility = View.VISIBLE
+                    emptyLabel.text = "Data tidak ditemukan"
+                }else {
+                    emptyLabel.visibility = View.GONE
+                }
             }
 
             R.id.admin_btnPrint -> {

@@ -8,11 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myabsensi.pojo.Absensi
-import com.example.myabsensi.pojo.Attendance
 import com.example.myabsensi.utils.Helper
-import java.text.SimpleDateFormat
 
-class AttendanceAdapter(private val mContext: Context?, private val data:List<Absensi>?): RecyclerView.Adapter<AttendanceAdapter.AttendanceHolder>() {
+class AttendanceAdapter(private val mContext: Context?, private var data:List<Absensi>?): RecyclerView.Adapter<AttendanceAdapter.AttendanceHolder>() {
     lateinit private var attendanceHolder : AttendanceHolder
     lateinit private var layoutView : View
 
@@ -30,7 +28,7 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<Ab
         val statusPulang = data?.get(position)?.status_pulang
         val date = Helper.Utils.indonesianDate(data?.get(position)!!.created_at)
         if (position > 0) {
-            val dateTemp = Helper.Utils.indonesianDate(data[position-1].created_at)
+            val dateTemp = Helper.Utils.indonesianDate(data!![position-1].created_at)
             if (date == dateTemp) {
                 holder.absensiDate.visibility = View.GONE
             } else {
@@ -41,7 +39,7 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<Ab
         }
 
         var keterangan = ""
-        if (data[position].jam_pulang == null) {
+        if (data!![position].jam_pulang == null) {
             keterangan = "Tidak Absen"
 
         }else{
@@ -54,9 +52,9 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<Ab
         holder.absensiDate.text = date
         holder.absensiName.text = name
         holder.absnesiDivision.text = "Divisi : $division"
-        holder.absensiMasukTime.text = data[position].jam_masuk
-        holder.absensiMasukLoc.text = if (data[position].status_masuk.equals("late")) "Terlambat" else "Ok"
-        holder.absensiPulangTime.text = data[position].jam_pulang
+        holder.absensiMasukTime.text = data!![position].jam_masuk
+        holder.absensiMasukLoc.text = if (data!![position].status_masuk.equals("late")) "Terlambat" else "Ok"
+        holder.absensiPulangTime.text = data!![position].jam_pulang
         holder.absensiPulangLoc.text = keterangan
 
         if (status.equals("late") || statusPulang.equals("late") || statusPulang.isNullOrEmpty()){
@@ -68,6 +66,11 @@ class AttendanceAdapter(private val mContext: Context?, private val data:List<Ab
 
     override fun getItemCount(): Int {
         return data!!.size
+    }
+
+    fun update(result: List<Absensi>?) {
+        this.data = result
+        notifyDataSetChanged()
     }
 
     inner class AttendanceHolder(itemView: View): RecyclerView.ViewHolder(itemView){
