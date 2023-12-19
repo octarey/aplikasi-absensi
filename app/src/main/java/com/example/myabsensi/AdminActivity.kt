@@ -188,8 +188,8 @@ class AdminActivity : AppCompatActivity(), View.OnClickListener {
                 val dialogPositiveButton = dialog.findViewById(R.id.btnSave) as Button
                 val dialogNegativeButton = dialog.findViewById(R.id.btnCancel) as Button
                 dialogPositiveButton.setOnClickListener {
-                    val lat = inputLatitude.text.toString()
-                    val long = inputLongitude.text.toString()
+                    val lat = inputLatitude.text.toString().replace("\\s".toRegex(), "")
+                    val long = inputLongitude.text.toString().replace("\\s".toRegex(), "")
                     val radius = inputRadius.text.toString()
                     sessionManager.save("latitude", lat)
                     sessionManager.save("longitude", long)

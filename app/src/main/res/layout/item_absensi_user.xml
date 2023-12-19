@@ -15,19 +15,23 @@
 
         <TextView
             android:id="@+id/history_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Tanggal"
+            android:text="Kamis, 09 November 2023"
             android:theme="@style/title_style"
+            android:textSize="14sp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/history_status"/>
 
         <TextView
             android:id="@+id/history_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="tidak sesuai jadwal"
+            android:textSize="12sp"
             android:textColor="@color/white"
+            android:layout_marginStart="8dp"
             android:paddingHorizontal="8dp"
             android:paddingVertical="3dp"
             android:background="@drawable/button_bg"

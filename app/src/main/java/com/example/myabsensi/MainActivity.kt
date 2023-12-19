@@ -82,7 +82,17 @@ class MainActivity : AppCompatActivity() {
             password = inputPassword.text.toString()
             if (username.isEmpty() || password.isEmpty()){
                 Toast.makeText(this, "username / password harus diisi", Toast.LENGTH_SHORT).show()
-            }else {
+            } else if (username.equals("admin") && password.equals("admin")){
+                val intent = Intent(this@MainActivity,  AdminActivity::class.java)
+                intent.putExtra("type" , "admin")
+                startActivity(intent)
+                finish()
+            } else if (username.equals("pengawas") && password.equals("pengawas")){
+                val intent = Intent(this@MainActivity,  AdminActivity::class.java)
+                intent.putExtra("type" , "pengawas")
+                startActivity(intent)
+                finish()
+            } else {
                 login(username, password)
             }
         }
@@ -119,6 +129,9 @@ class MainActivity : AppCompatActivity() {
         if (intent.hasExtra("page")){
             page = intent.getStringExtra("page").toString()
         }
+
+        setLocation()
+
 //
 
 //        office.latitude = -8.194319
@@ -135,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                 if (data == null){
                     loadingLogin.visibility = View.INVISIBLE
                     layoutLogin.visibility = View.VISIBLE
-                    btnLoginAdmin.visibility = View.VISIBLE
+                   // btnLoginAdmin.visibility = View.VISIBLE
                     prefManager.removeData()
                     titleLogin.text = getString(R.string.login, "MASUK")
                     btnLogin.text = getString(R.string.login, "MASUK")
@@ -143,7 +156,6 @@ class MainActivity : AppCompatActivity() {
                 }else {
                     absenId = data.id
                     checkLogin()
-                    setLocation()
                 }
             }
 
